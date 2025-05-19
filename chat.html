@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flocker Chat</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .chat-container {
+            height: calc(100vh - 180px);
+        }
+        .message {
+            max-width: 70%;
+            margin: 8px;
+            padding: 12px;
+            border-radius: 15px;
+        }
+        .message.sent {
+            background-color: #3B82F6;
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        .message.received {
+            background-color: #E5E7EB;
+            color: #1F2937;
+            margin-right: auto;
+            border-bottom-left-radius: 5px;
+        }
+        .typing-indicator {
+            display: none;
+            padding: 8px;
+            color: #6B7280;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <!-- Header -->
+            <div class="bg-blue-600 text-white p-4">
+                <h1 class="text-xl font-bold">Flocker Chat</h1>
+                <div id="userStatus" class="text-sm">Connecting...</div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div id="chatMessages" class="chat-container overflow-y-auto p-4 bg-gray-50">
+                <!-- Messages will be inserted here -->
+            </div>
+
+            <!-- Typing Indicator -->
+            <div id="typingIndicator" class="typing-indicator px-4">
+                Someone is typing...
+            </div>
+
+            <!-- Input Area -->
+            <div class="p-4 bg-white border-t">
+                <div class="flex space-x-4">
+                    <input type="text" 
+                           id="messageInput" 
+                           class="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:border-blue-500"
+                           placeholder="Type your message...">
+                    <button onclick="sendMessage()" 
+                            class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none">
+                        Send
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+        const messageInput = document.getElementById('messageInput');
+        const chatMessages = document.getElementById('chatMessages');
+        const userStatus = document.getElementById('userStatus');
+        const typingIndicator = document.getElementById('typingIndicator');
+        let typingTimeout;
+
+        // Connection status
+        socket.on('connect', () => {
+            userStatus.textContent = 'Connected';
+            userStatus.style.color = '#10B981';
+        });
+
+        socket.on('disconnect', () => {
+            userStatus.textContent = 'Disconnected';
+            userStatus.style.color = '#EF4444';
+        });
+
+        // Message handling
+        socket.on('message', (data) => {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${data.isSent ? 'sent' : 'received'}`;
+            messageDiv.textContent = data.message;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+
+        // Typing indicator
+        socket.on('typing', (isTyping) => {
+            typingIndicator.style.display = isTyping ? 'block' : 'none';
+        });
+
+        // Send message function
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (message) {
+                socket.emit('message', message);
+                messageInput.value = '';
+            }
+        }
+
+        // Handle typing indicator
+        messageInput.addEventListener('input', () => {
+            socket.emit('typing', true);
+            clearTimeout(typingTimeout);
+            typingTimeout = setTimeout(() => {
+                socket.emit('typing', false);
+            }, 1000);
+        });
+
+        // Send message on Enter key
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html> 
