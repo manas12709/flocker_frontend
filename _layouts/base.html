@@ -1,17 +1,143 @@
-
 <!DOCTYPE html>
 <html lang='{{ page.lang | default: site.lang | default: "en" }}'>
-
-<!-- Look in _includes/theme for <head> and <body> definitions -->
-{% if site.remote_theme contains 'minima' %}
-  {%- include theme/minima/base.html -%}
-{% elsif site.remote_theme contains 'midnight' %}
-  {%- include theme/midnight/base.html -%}
-{% elsif site.remote_theme contains 'dinky' %}
-  {%- include theme/dinky/base.html -%}
-{% elsif site.remote_theme contains 'time-machine' %}
-  {%- include theme/time-machine/base.html -%}
-{% elsif site.remote_theme contains 'cayman' %}
-  {%- include theme/cayman/base.html -%}
-{% endif %}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title | default: site.title }}</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #101624 0%, #233047 100%);
+      min-height: 100vh;
+    }
+    .main-content {
+      background: #181e29;
+      border-radius: 1.5rem;
+      box-shadow: 0 8px 32px 0 rgba(16, 22, 36, 0.18);
+      padding: 2.5rem 2rem 2rem 2rem;
+      margin-top: 2.5rem;
+      margin-bottom: 2.5rem;
+      max-width: 900px;
+      width: 100%;
+      border: 3px solid #38bdf8;
+      position: relative;
+    }
+    .main-content::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 8px;
+      border-radius: 1.5rem 1.5rem 0 0;
+      background: linear-gradient(90deg, #38bdf8 0%, #2563eb 100%);
+    }
+    .site-footer {
+      background: #181e29;
+      color: #fff;
+      text-align: center;
+      padding: 1.5rem 0 1rem 0;
+      border-radius: 2rem 2rem 0 0;
+      font-size: 1rem;
+      margin-top: 2rem;
+      letter-spacing: 0.02em;
+      border-top: 3px solid #38bdf8;
+    }
+    h1, h2, h3, h4, h5, h6, p, li, ul, ol, span, label, input, textarea, select, div, a, strong, em, b, i {
+      color: #fff !important;
+      background: none !important;
+      text-shadow: none !important;
+    }
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+    h3 { font-size: 1.5rem; }
+    h4 { font-size: 1.25rem; }
+    h5 { font-size: 1.1rem; }
+    h6 { font-size: 1rem; }
+    p, li, ul, ol {
+      font-size: 1.1rem;
+      line-height: 1.7;
+    }
+    a {
+      text-decoration: underline;
+      transition: color 0.2s;
+      font-weight: 600;
+    }
+    a:hover {
+      color: #38bdf8 !important;
+      background: none !important;
+      border-radius: 0.3em;
+      padding: 0.1em 0.3em;
+      text-decoration: none;
+    }
+    .card {
+      background: #232947;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px 0 rgba(16, 22, 36, 0.08);
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      border: 2px solid #38bdf8;
+      color: #fff !important;
+    }
+    button, .btn {
+      background: linear-gradient(90deg, #2563eb 0%, #38bdf8 100%);
+      color: #fff;
+      border: none;
+      border-radius: 0.7rem;
+      padding: 0.6rem 1.3rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px 0 rgba(16, 22, 36, 0.10);
+      cursor: pointer;
+    }
+    button:hover, .btn:hover {
+      background: #fff;
+      color: #2563eb;
+      border: 2px solid #38bdf8;
+    }
+    input, textarea, select {
+      border: 2px solid #38bdf8;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+      width: 100%;
+      background: #232947;
+      color: #fff !important;
+      transition: border 0.2s;
+    }
+    input:focus, textarea:focus, select:focus {
+      border: 2px solid #38bdf8;
+      outline: none;
+    }
+    @media (max-width: 900px) {
+      .main-content { padding: 1.2rem 0.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="flex flex-col items-center justify-center">
+    <div class="main-content">
+      {% if site.remote_theme contains 'minima' %}
+        {%- include theme/minima/base.html -%}
+      {% elsif site.remote_theme contains 'midnight' %}
+        {%- include theme/midnight/base.html -%}
+      {% elsif site.remote_theme contains 'dinky' %}
+        {%- include theme/dinky/base.html -%}
+      {% elsif site.remote_theme contains 'time-machine' %}
+        {%- include theme/time-machine/base.html -%}
+      {% elsif site.remote_theme contains 'cayman' %}
+        {%- include theme/cayman/base.html -%}
+      {% else %}
+        {{ content }}
+      {% endif %}
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container mx-auto">
+      &copy; {{ site.time | date: '%Y' }} {{ site.title }} &mdash; All rights reserved.
+    </div>
+  </footer>
+  <script type="module" src="{{ site.baseurl }}/assets/js/api/login.js"></script>
+</body>
 </html>
