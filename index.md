@@ -7,9 +7,7 @@ hide: true
 menu: nav/home.html
 ---
 
-<!DOCTYPE html>
 <html lang="en">
-<head>
   <meta charset="UTF-8">
   <title>Flocker Chat – DNHS CSP</title>
   <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
@@ -103,8 +101,6 @@ menu: nav/home.html
       float: right;
     }
   </style>
-</head>
-<body>
 
 <!-- Step 1: Ask for username -->
 <div id="username-form" class="centered">
@@ -210,5 +206,4 @@ menu: nav/home.html
   }
 </script>
 
-</body>
-</html>
+
