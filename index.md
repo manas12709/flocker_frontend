@@ -143,6 +143,7 @@ menu: nav/home.html
   let socket;
   let username;
   let room;
+  let lastMessage = "";
 
   function goToRoomSelection() {
     const name = document.getElementById("usernameInput").value.trim();
@@ -163,7 +164,10 @@ menu: nav/home.html
     document.getElementById("room-name").textContent = "Room: " + room;
     document.getElementById("user-label").textContent = "You: " + username;
 
-    socket = io("http://localhost:8887");
+    socket = io("http://localhost:8887", {
+      reconnectionAttempts: 5,
+      timeout: 10000
+    });
 
     socket.on("connect", () => {
       socket.emit("join", { username, room });
@@ -190,20 +194,47 @@ menu: nav/home.html
     socket.on("user_list", (users) => {
       document.getElementById("users-list").textContent = "Users: " + users.join(", ");
     });
+
+    socket.on("disconnect", () => {
+      showSystemMessage("⚠️ Disconnected from server. Trying to reconnect...");
+    });
+
+    socket.io.on("reconnect", (attempt) => {
+      showSystemMessage("✅ Reconnected after " + attempt + " attempt(s).");
+      socket.emit("join", { username, room });
+    });
+
+    socket.io.on("reconnect_failed", () => {
+      showSystemMessage("❌ Failed to reconnect. Please reload.");
+    });
+
+    document.getElementById("msgInput").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        sendMessage();
+      }
+    });
   }
 
   function sendMessage() {
     const input = document.getElementById("msgInput");
     const text = input.value.trim();
-    if (text) {
-      socket.emit("message", {
-        username: username,
-        room: room,
-        text: text
-      });
-      input.value = "";
-    }
+    if (!text || text === lastMessage) return;
+    lastMessage = text;
+
+    socket.emit("message", {
+      username: username,
+      room: room,
+      text: text
+    });
+    input.value = "";
+  }
+
+  function showSystemMessage(text) {
+    const msgDiv = document.createElement("div");
+    msgDiv.classList.add("message", "system");
+    msgDiv.innerHTML = `<strong>System</strong><br>${text}`;
+    const container = document.getElementById("messages");
+    container.appendChild(msgDiv);
+    container.scrollTop = container.scrollHeight;
   }
 </script>
-
-
