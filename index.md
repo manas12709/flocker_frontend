@@ -122,16 +122,17 @@ menu: nav/home.html
         document.getElementById("chat-box").style.display = "block";
         document.getElementById("room-name").textContent = `Room: ${room}`;
 
-        socket = io("http://localhost:4887");
+        // Connect to Flask backend on port 8887
+        socket = io("http://localhost:8887");
 
         socket.on("connect", () => {
             socket.emit("join", { username, room });
         });
 
         socket.on("message", (msg) => {
-            const li = document.createElement("div");
-            li.textContent = msg;
-            document.getElementById("messages").appendChild(li);
+            const div = document.createElement("div");
+            div.textContent = msg;
+            document.getElementById("messages").appendChild(div);
             document.getElementById("messages").scrollTop = messages.scrollHeight;
         });
 
