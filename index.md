@@ -35,7 +35,6 @@ menu: nav/home.html
             font-size: 1.4rem;
             text-align: center;
         }
-=
         .chat-messages {
             height: 300px;
             overflow-y: auto;
@@ -101,7 +100,7 @@ menu: nav/home.html
     let username;
     let room;
 
-    function joinRoom() {
+    function joinRoom() { 
         username = document.getElementById("username").value.trim();
         room = document.getElementById("room").value.trim();
 
