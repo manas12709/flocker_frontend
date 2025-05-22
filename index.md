@@ -123,8 +123,8 @@ menu: nav/home.html
     <button onclick="joinRoom('grading')"> Grading Channel</button>
     <button onclick="joinRoom('announcements')"> Announcements</button>
     <button onclick="joinRoom('resources')"> Resources & Notes</button>
-    <button onclick="joinRoom('qna')">Q&A Forum</button>
-    <button onclick="joinRoom('debugging')">Debugging Zone</button>
+    <button onclick="joinRoom('qna')"> Q&A Forum</button>
+    <button onclick="joinRoom('debugging')"> Debugging Zone</button>
     <button onclick="joinRoom('projects')">Project Collaboration</button>
   </div>
 </div>
