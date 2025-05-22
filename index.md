@@ -20,7 +20,6 @@ menu: nav/home.html
             margin: 0;
             padding: 0;
         }
-
         .chat-container {
             max-width: 700px;
             margin: 40px auto;
@@ -29,7 +28,6 @@ menu: nav/home.html
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             overflow: hidden;
         }
-
         .chat-header {
             padding: 20px;
             background: #007bff;
@@ -37,32 +35,28 @@ menu: nav/home.html
             font-size: 1.4rem;
             text-align: center;
         }
-
+=
         .chat-messages {
             height: 300px;
             overflow-y: auto;
             padding: 20px;
             border-bottom: 1px solid #ccc;
         }
-
         .chat-users {
             padding: 10px 20px;
             border-bottom: 1px solid #ccc;
             background: #f9f9f9;
             font-size: 0.9rem;
         }
-
         .chat-input {
             display: flex;
             padding: 20px;
         }
-
         #msgInput {
             flex: 1;
             padding: 10px;
             font-size: 1rem;
         }
-
         button {
             padding: 10px 20px;
             font-size: 1rem;
@@ -72,12 +66,10 @@ menu: nav/home.html
             cursor: pointer;
             margin-left: 10px;
         }
-
         #login-form {
             text-align: center;
             padding: 40px;
         }
-
         #login-form input {
             padding: 10px;
             margin: 10px;
