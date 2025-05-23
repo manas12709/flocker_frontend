@@ -1,0 +1,33 @@
+body {
+    background: #1e1e1e;
+    color: #c5c5c5;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .terminal {
+    width: 80%;
+    max-width: 700px;
+    background-color: #2d2d2d;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px black;
+  }
+  
+  #output {
+    white-space: pre-wrap;
+  }
+  
+  #commandInput {
+    width: 100%;
+    background: #1e1e1e;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    padding: 10px;
+  }
+  
