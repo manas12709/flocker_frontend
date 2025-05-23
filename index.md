@@ -317,7 +317,7 @@ menu: nav/home.html
       // Clean up previous listeners if any
       removeChatListeners();
 
-      socket = io("http://localhost:8887");
+      socket = io("http://localhost:4887");
 
       socket.on("connect", () => {
         socket.emit("join", { username, room });
